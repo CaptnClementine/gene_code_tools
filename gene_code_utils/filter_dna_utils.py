@@ -50,3 +50,26 @@ def is_in_gc_bounds(bounds: tuple, dna: str) -> bool:
         upper_bound += 1
     return lower_bound <= gc_content < upper_bound
 
+
+def is_in_length_bounds(bounds: tuple, dna: str) -> bool:
+    """
+    Check if the length of a DNA sequence falls within the specified bounds.
+
+    Args:
+        bounds (tuple): A tuple specifying the lower and upper bounds for sequence length.
+        dna (str): The input DNA sequence.
+
+    Returns:
+        bool: True if the sequence length is within the bounds, False otherwise.
+    """
+    dna_length = len(dna)
+    lower_bound = min(bounds[0], bounds[1])
+    upper_bound = max(bounds[0], bounds[1])
+    if upper_bound < 0 or lower_bound < 0:
+        raise ValueError("Invalid length_bounds. Each value must be greater than zero.")
+    if upper_bound == lower_bound:
+        upper_bound += 1
+    return lower_bound <= dna_length < upper_bound
+
+
+
