@@ -28,3 +28,25 @@ def count_gc_content(dna: str) -> float:
     at = dna.count('A') + dna.count('T')
     gc_content = gc / (at + gc) * 100
     return gc_content
+
+
+def is_in_gc_bounds(bounds: tuple, dna: str) -> bool:
+    """
+    Check if the GC content of a DNA sequence falls within the specified bounds.
+
+    Args:
+        bounds (tuple): A tuple specifying the lower and upper bounds for GC content.
+        dna (str): The input DNA sequence.
+
+    Returns:
+        bool: True if the GC content is within the bounds, False otherwise.
+    """
+    gc_content = count_gc_content(dna)
+    upper_bound = max(bounds[0], bounds[1])
+    lower_bound = min(bounds[0], bounds[1])
+    if upper_bound < 0 or lower_bound < 0:
+        raise ValueError("Invalid gc_bounds. Each value must be greater than zero.")
+    if upper_bound == lower_bound:
+        upper_bound += 1
+    return lower_bound <= gc_content < upper_bound
+
