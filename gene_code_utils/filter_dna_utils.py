@@ -72,4 +72,23 @@ def is_in_length_bounds(bounds: tuple, dna: str) -> bool:
     return lower_bound <= dna_length < upper_bound
 
 
+def check_quality(quality_threshold: int, quality: str) -> bool:
+    """
+    Check if the average quality score of a sequence exceeds a threshold.
 
+    Args:
+        quality_threshold (int): The quality threshold for filtering sequences.
+        quality (str): The quality string (in Phred+33 format).
+
+    Returns:
+        bool: True if the average quality score is above the threshold, False otherwise.
+    """
+    if quality_threshold < 0 or quality_threshold > 42:
+        raise ValueError("Invalid quality_threshold. Must be an integer in the range [0, 42]")
+    score = 0
+    for char in quality:
+        score += ord(char) - 33
+        if ord(char) < 33 or ord(char) > 126:
+            return False
+    avg_quality = score / len(quality) 
+    return quality_threshold <= avg_quality
