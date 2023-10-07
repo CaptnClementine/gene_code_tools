@@ -76,3 +76,23 @@ def reverse_complement(seq: str) -> str:
         str: The reverse complemented sequence.
     """
     return reverse(complement(seq))
+
+
+def reverse_transcription(seq: str) -> str:
+    """
+    Perform reverse transcription on an RNA sequence.
+
+    Args:
+        seq (str): The input RNA sequence.
+
+    Returns:
+        str: The reverse transcribed DNA sequence.
+    """
+    c_dna = []
+    u_to_t = {'U': 'T', 'u': 't'}
+    for i in seq:
+        if i in u_to_t:
+            c_dna.append(u_to_t.get(i))
+        else:
+            c_dna.append(i)
+    return ''.join(c_dna)
