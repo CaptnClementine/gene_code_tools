@@ -130,3 +130,22 @@ def reverse_transcription(seq: str) -> str:
         else:
             c_dna.append(i)
     return ''.join(c_dna)
+
+
+def has_start_codon(seq: str) -> Union[bool, str]:
+    """
+    Check if an RNA sequence has a start codon.
+
+    Args:
+        seq (str): The input RNA sequence.
+
+    Returns:
+        Union[bool, str]: True if a start codon is found, False if not found,
+            '?' if the input is DNA and needs to be transcribed first.
+    """
+    if is_rna(seq):
+        return "AUG" in seq.upper()
+    if is_dna(seq):
+        print("First, you should transcribe your DNA.")
+        return '?'
+    raise ValueError("Input sequence must be DNA or RNA.")
