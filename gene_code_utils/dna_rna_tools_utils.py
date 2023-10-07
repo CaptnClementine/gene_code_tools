@@ -63,3 +63,16 @@ def complement(seq: str) -> str:
     for i in seq:
         new_seq.append(complement_dict.get(i))
     return ''.join(new_seq)
+
+
+def reverse_complement(seq: str) -> str:
+    """
+    Find the reverse complement of a DNA or RNA sequence.
+
+    Args:
+        seq (str): The input DNA or RNA sequence.
+
+    Returns:
+        str: The reverse complemented sequence.
+    """
+    return reverse(complement(seq))
