@@ -1,5 +1,7 @@
 AA_SET = set(['V', 'I', 'L', 'E', 'Q', 'D', 'N', 'H', 'W', 'F', 'Y', 'R', 'K', 'S', 'T', 'M', 'A', 'G', 'P', 'C',
                'v', 'i', 'l', 'e', 'q', 'd', 'n', 'h', 'w', 'f', 'y', 'r', 'k', 's', 't', 'm', 'a', 'g', 'p', 'c'])
+HYDROPHOBIC_AA = ['A', 'V', 'L', 'I', 'P', 'F', 'W', 'M']
+HYDROPHILIC_AA = ['R', 'N', 'D', 'C', 'Q', 'E', 'G', 'H', 'K', 'S', 'T', 'Y']
 
 
 def is_aa(seq: str) -> bool:
@@ -62,3 +64,26 @@ def aa_weight(seq: str, weight: str = 'average') -> float:
     for aa in seq.upper():
         final_weight += weights_aa[aa]
     return round(final_weight, 3)
+
+
+def count_hydroaffinity(seq: str) -> list:
+    """
+    Count the quantity of hydrophobic and hydrophilic amino acids in a protein sequence.
+
+    Args:
+        seq (str): The protein sequence for which to count hydrophobic and hydrophilic amino acids.
+
+    Returns:
+        tuple: A tuple containing the count of hydrophobic and hydrophilic amino acids, respectively.
+    """
+    hydrophobic_count = 0
+    hydrophilic_count = 0
+    seq = seq.upper()
+    
+    for aa in seq:
+        if aa in HYDROPHOBIC_AA:
+            hydrophobic_count += 1
+        elif aa in HYDROPHILIC_AA:
+            hydrophilic_count += 1
+    
+    return [hydrophobic_count, hydrophilic_count]
