@@ -149,3 +149,17 @@ def has_start_codon(seq: str) -> Union[bool, str]:
         print("First, you should transcribe your DNA.")
         return '?'
     raise ValueError("Input sequence must be DNA or RNA.")
+
+
+def is_palindrome(seq: str) -> bool:
+    """
+    Check if a sequence is a palindrome.
+
+    Args:
+        seq (str): The input sequence to check.
+
+    Returns:
+        bool: True if the sequence is a palindrome, False otherwise.
+    """
+    new_seq = reverse_complement(seq)
+    return new_seq.upper() == seq.upper()
