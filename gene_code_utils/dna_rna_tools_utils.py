@@ -28,3 +28,16 @@ def is_rna(seq: str) -> bool:
     """
     unique_chars = set(seq)
     return unique_chars <= RNA
+
+
+def reverse(seq: str) -> str:
+    """
+    Reverse a sequence.
+
+    Args:
+        seq (str): The input sequence.
+
+    Returns:
+        str: The reversed sequence.
+    """
+    return seq[::-1]
