@@ -1,5 +1,12 @@
 DNA = set ('ATGCatgc')
 RNA = set ('AUGCaugc')
+TRANSCRIPTION_TABLE = {
+    "a": "a", "A": "A",
+    "t": "u", "T": "U",
+    "u": "t", "U": "T",
+    "g": "g", "G": "G",
+    "c": "c", "C": "C"
+}
 
 
 def is_dna(seq: str) -> bool:
@@ -163,3 +170,7 @@ def is_palindrome(seq: str) -> bool:
     """
     new_seq = reverse_complement(seq)
     return new_seq.upper() == seq.upper()
+
+
+def transcribe(seq):
+    return ''.join([TRANSCRIPTION_TABLE[i] for i in seq])
