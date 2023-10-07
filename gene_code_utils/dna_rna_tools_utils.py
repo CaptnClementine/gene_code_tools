@@ -30,6 +30,40 @@ def is_rna(seq: str) -> bool:
     return unique_chars <= RNA
 
 
+def type_rna_or_dna(seqs: List[str]) -> str:
+    """
+    Determine the type of RNA or DNA from a list of sequences.
+
+    Args:
+        seqs (List[str]): List of sequences to determine their type.
+
+    Returns:
+        str: 'DNA' if all sequences are DNA, 'RNA' if all sequences are RNA,
+            'MIXED' if there are both DNA and RNA sequences, or raises a ValueError for unsupported sequences.
+    """
+    counter_dna = 0
+    counter_rna = 0
+    ambigiuos = 0
+    for i in seqs:
+      if is_dna(i) and is_rna(i):
+          ambigiuos = ambigiuos+1
+      else:
+        if is_dna(i):
+            counter_dna=counter_dna+1
+        elif is_rna(i):
+            counter_rna=counter_rna+1
+    if (counter_dna + ambigiuos) == len(seqs):
+        print('You have ', ambigiuos, ' ambigious NA. I suppose they are DNA')
+        return "DNA"
+    elif (counter_rna + ambigiuos) == len(seqs):
+        print('You have ', ambigiuos, ' ambigious NA. I suppose they are RNA')
+        return "RNA"
+    elif (counter_dna + counter_rna + ambigiuos)  == len(seqs):
+        return "MIXED"
+    else:
+        raise ValueError("I can work only with RNA and DNA. \n Check your sequences and try one more time!")   
+
+
 def reverse(seq: str) -> str:
     """
     Reverse a sequence.
