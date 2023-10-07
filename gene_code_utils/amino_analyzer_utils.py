@@ -87,3 +87,36 @@ def count_hydroaffinity(seq: str) -> list:
             hydrophilic_count += 1
     
     return [hydrophobic_count, hydrophilic_count]
+
+
+def peptide_cutter(sequence: str, enzyme: str = "trypsin") -> list:
+    """
+    This function identifies cleavage sites in a given peptide sequence using a specified enzyme.
+    
+    Args:
+        sequence (str): The input peptide sequence.
+        enzyme (str): The enzyme to be used for cleavage. Choose between "trypsin" and "chymotrypsin". Default is "trypsin".
+        
+    Returns:
+        str: A message indicating the number and positions of cleavage sites, or an error message if an invalid enzyme is provided.
+    """
+    cleavage_sites = []
+    if enzyme not in ("trypsin", "chymotrypsin"):
+        return "You have chosen an enzyme that is not provided. Please choose between trypsin and chymotrypsin."
+    
+    if enzyme == "trypsin":  # Trypsin cuts peptide chains mainly at the carboxyl side of the amino acids lysine or arginine.
+        for aa in range(len(sequence)-1):
+            if sequence[aa] in ['K', 'R', 'k', 'r'] and sequence[aa+1] not in ['P','p']:
+                cleavage_sites.append(aa + 1)
+    
+    if enzyme == "chymotrypsin":  # Chymotrypsin preferentially cleaves at Trp, Tyr and Phe in position P1(high specificity) 
+        for aa in range(len(sequence) - 1):
+            if sequence[aa] in ['W', 'Y', 'F', 'w', 'y', 'f'] and sequence[aa+1] not in ['P','p']:
+                cleavage_sites.append(aa + 1)
+    
+    if cleavage_sites:
+        print( f"Found {len(cleavage_sites)} {enzyme} cleavage sites at positions {', '.join(map(str, cleavage_sites))}")
+        return cleavage_sites#  list(', '.join(map(str, cleavage_sites)))
+    else:
+        print(f"No {enzyme} cleavage sites were found.")
+        return 0
