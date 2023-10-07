@@ -2,6 +2,8 @@ AA_SET = set(['V', 'I', 'L', 'E', 'Q', 'D', 'N', 'H', 'W', 'F', 'Y', 'R', 'K', '
                'v', 'i', 'l', 'e', 'q', 'd', 'n', 'h', 'w', 'f', 'y', 'r', 'k', 's', 't', 'm', 'a', 'g', 'p', 'c'])
 HYDROPHOBIC_AA = ['A', 'V', 'L', 'I', 'P', 'F', 'W', 'M']
 HYDROPHILIC_AA = ['R', 'N', 'D', 'C', 'Q', 'E', 'G', 'H', 'K', 'S', 'T', 'Y']
+AMINO_ACIDS = {'A': 'Ala', 'C': 'Cys', 'D': 'Asp', 'E': 'Glu', 'F': 'Phe', 'G': 'Gly', 'H': 'His', 'I': 'Ile', 'K': 'Lys', 'L': 'Leu',
+        'M': 'Met', 'N': 'Asn', 'P': 'Pro', 'Q': 'Gln', 'R': 'Arg', 'S': 'Ser', 'T': 'Thr', 'V': 'Val', 'W': 'Trp', 'Y': 'Tyr'}
 
 
 def is_aa(seq: str) -> bool:
@@ -120,3 +122,17 @@ def peptide_cutter(sequence: str, enzyme: str = "trypsin") -> list:
     else:
         print(f"No {enzyme} cleavage sites were found.")
         return 0
+
+
+def one_to_three_letter_code(sequence: str) -> str:
+    """
+    This function converts a protein sequence from one-letter amino acid code to three-letter code.
+    
+    Args:
+        sequence (str): The input protein sequence in one-letter code.
+        
+    Returns:
+        str: The converted protein sequence in three-letter code.
+    """
+    three_letter_code = [AMINO_ACIDS.get(aa.upper()) for aa in sequence]
+    return '-'.join(three_letter_code)
