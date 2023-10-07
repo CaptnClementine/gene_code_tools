@@ -45,3 +45,20 @@ def choose_weight(weight: str) -> dict:
 
     return average_weights if weight == 'average' else monoisotopic_weights
 
+
+def aa_weight(seq: str, weight: str = 'average') -> float:
+    """
+    Calculate the amino acids weight in a protein sequence.
+
+    Args:
+        seq (str): The amino acid sequence to calculate the weight for.
+        weight (str, optional): The type of weight to use, either 'average' or 'monoisotopic'. Default is 'average'.
+
+    Returns:
+        float: The calculated weight of the amino acid sequence.
+    """
+    weights_aa = choose_weight(weight)
+    final_weight = 0
+    for aa in seq.upper():
+        final_weight += weights_aa[aa]
+    return round(final_weight, 3)
