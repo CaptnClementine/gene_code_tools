@@ -61,7 +61,7 @@ print(filtered_seqs)
 
 When using Gene Code Tools, you might encounter common errors such as invalid input values or incorrect sequence formats. Here are some typical errors and how to handle them:
 
-1. **Invalid gc_bounds or length_bounds**: Ensure that the bounds provided are valid tuples with two non-negative values or a single non-negative integer. For example, `gc_bounds=(20, 80)` is valid, and `gc_bounds=44.4` sets an upper GC content limit of 44.4%. Make sure that upper bounds are greater than lower bounds.
+1. **Invalid gc_bounds or length_bounds**: Ensure that the bounds provided are valid tuples with two non-negative values or a single non-negative integer. For example, `gc_bounds=(20, 80)` is valid, and `gc_bounds=44.4` sets an upper GC content limit of 44.4%. All bounds inclusive
 2. **Invalid quality_threshold**: The `quality_threshold` should be an integer between 0 and 42 (inclusive).
 3. **Invalid sequence characters**: When working with DNA sequences, make sure that the input sequences contain only valid DNA characters (A, T, G, C, a, t, g, c).
 
