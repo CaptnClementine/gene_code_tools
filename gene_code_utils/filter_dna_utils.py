@@ -48,7 +48,7 @@ def is_in_gc_bounds(bounds: tuple, dna: str) -> bool:
         raise ValueError("Invalid gc_bounds. Each value must be greater than zero.")
     if upper_bound == lower_bound:
         upper_bound += 1
-    return lower_bound <= gc_content < upper_bound
+    return lower_bound <= gc_content <= upper_bound
 
 
 def is_in_length_bounds(bounds: tuple, dna: str) -> bool:
@@ -69,7 +69,7 @@ def is_in_length_bounds(bounds: tuple, dna: str) -> bool:
         raise ValueError("Invalid length_bounds. Each value must be greater than zero.")
     if upper_bound == lower_bound:
         upper_bound += 1
-    return lower_bound <= dna_length < upper_bound
+    return lower_bound <= dna_length <= upper_bound
 
 
 def check_quality(quality_threshold: int, quality: str) -> bool:
