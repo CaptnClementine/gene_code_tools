@@ -32,7 +32,7 @@ def filter_dna(seqs: Dict[str, Tuple[str, str]], gc_bounds: Union[Tuple[int, int
 
     Example:
         filtered_seqs = filtr_dna(seqs, gc_bounds=(20, 80), length_bounds=50, quality_threshold=30)
-        - here gc_bounds interval will be [20, 80) and length_bounds will be [0, 50].
+        - here gc_bounds interval will be [20, 80] and length_bounds will be [0, 50].
           quality_threshold will be 30 <= sequence score
 
     Warnings: If you prefer
@@ -42,9 +42,9 @@ def filter_dna(seqs: Dict[str, Tuple[str, str]], gc_bounds: Union[Tuple[int, int
     for fastq_name, (seq, quality) in seqs.items():
         if is_dna(seq):
             if type(gc_bounds) == int:
-                gc_bounds = (0, gc_bounds + 1)
+                gc_bounds = (0, gc_bounds)
             if type(length_bounds) == int:
-                length_bounds = (0, length_bounds + 1)
+                length_bounds = (0, length_bounds)
             if is_in_gc_bounds(gc_bounds, seq) and is_in_length_bounds(length_bounds, seq) and check_quality(quality_threshold, quality):
                 filtered_seqs[fastq_name] = (seq, quality)
 
