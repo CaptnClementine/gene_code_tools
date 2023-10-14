@@ -1,3 +1,5 @@
+from typing import List, Union
+
 DNA = set ('ATGCatgc')
 RNA = set ('AUGCaugc')
 TRANSCRIPTION_TABLE = {
