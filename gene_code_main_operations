@@ -1,4 +1,4 @@
-from typing import Dict, Tuple, Union
+from typing import Dict, Tuple, Union, List
 from gene_code_utils.filter_dna_utils import is_dna, is_in_gc_bounds, is_in_length_bounds, check_quality
 from gene_code_utils.amino_analyzer_utils import  aa_weight, count_hydroaffinity, peptide_cutter, one_to_three_letter_code, sulphur_containing_aa_counter
 from gene_code_utils.dna_rna_tools_utils import type_rna_or_dna, transcribe, reverse_transcription, has_start_codon, reverse, complement, reverse_complement, is_palindrome
@@ -49,9 +49,6 @@ def filter_dna(input_path: str, output_filename: str, gc_bounds: Union[Tuple[int
     write_filtered_fastq(filtered_seqs, output_filename)
 
     return filtered_seqs
-
-
-from amino_analyzer_utils import aa_weight, count_hydroaffinity, peptide_cutter, one_to_three_letter_code, sulphur_containing_aa_counter
 
 
 def run_amino_analyzer(sequence: str, procedure: str, *, weight_type: str = 'average', enzyme: str = 'trypsin'):
