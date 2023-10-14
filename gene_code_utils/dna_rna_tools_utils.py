@@ -1,3 +1,6 @@
+from typing import List, Union, Dict, Tuple
+
+
 DNA = set ('ATGCatgc')
 RNA = set ('AUGCaugc')
 TRANSCRIPTION_TABLE = {
@@ -8,6 +11,49 @@ TRANSCRIPTION_TABLE = {
     "c": "c", "C": "C"
 }
 
+
+def read_fastq_file(input_path: str) -> Dict[str, Tuple[str, str, str]]:
+    """
+    Read a FASTQ file and convert it into a dictionary.
+
+    Args:
+        input_path (str): Path to the input FASTQ file.
+
+    Returns:
+        fastq_dict (dict): A dictionary containing FASTQ sequences.
+            Key: Sequence name (string).
+            Value: Tuple of three strings (sequence, comment, quality).
+    """
+    fastq_dict = {}
+    current_name = ''
+    current_seq = ''
+    current_comment = ''
+    current_quality = ''
+    line_counter = 1
+
+    with open(input_path, 'r') as file:
+        for line in file:
+            line = line.strip()
+
+            if line_counter == 1:
+                current_name = line[1:]
+                line_counter += 1
+            elif line_counter == 2:
+                current_seq = line
+                line_counter += 1
+            elif line_counter == 3:
+                current_comment = line
+                line_counter += 1
+            elif line_counter == 4:
+                current_quality = line
+                line_counter += 1
+
+            if line_counter == 5:
+                fastq_dict[current_name] = (current_seq, current_comment, current_quality)
+                line_counter = 1
+
+    return fastq_dict
+    
 
 def is_dna(seq: str) -> bool:
     """
