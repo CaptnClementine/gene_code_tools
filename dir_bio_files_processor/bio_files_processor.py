@@ -121,3 +121,30 @@ def change_fasta_start_pos(input_fasta: str, shift: int, output_fasta: str = 'ou
         data[1] = data[1][shift:] + data[1][:shift]
     with open(output_fasta,'w') as fasta_file:
         fasta_file.write("".join(data))
+
+
+def parse_blast_output(input_file: str, output_file: str = 'output_auto.fasta') -> None:
+    """
+    Parse the output of a BLAST search and extract sequence identifiers producing significant alignments.
+
+    Args:
+        input_file (str): The path to the input BLAST output file.  Please write your path with directory etc. You can use os.path.join(dir_name, file_name) 
+        output_file (str, optional): The name of the output file for the extracted sequence identifiers. If not provided, it will be generated as 'output_auto.fasta'.
+
+    Returns:
+        None
+    """
+    with open(input_file) as blast_file:
+        output = []
+        counter = 0
+        for line in blast_file:
+            if 'Sequences producing significant alignments' in line:
+                counter += 1
+            elif 'Description' in line:
+                counter += 1
+            elif counter == 2:
+                output.append(line.split('    ')[0].split('...')[0])
+                counter = 0
+                
+    with open(output_file,'w') as blast_file:
+        blast_file.write("\n".join(output))
