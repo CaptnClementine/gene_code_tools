@@ -1,19 +1,17 @@
-from typing import Dict, Tuple, Union
-from gene_code_utils.filter_dna_utils import is_dna, is_in_gc_bounds, is_in_length_bounds, check_quality
-from gene_code_utils.amino_analyzer_utils import  aa_weight, count_hydroaffinity, peptide_cutter, one_to_three_letter_code, sulphur_containing_aa_counter
+from typing import Dict, Tuple, Union, List
+from gene_code_utils.filter_dna_utils import is_dna, is_in_gc_bounds, is_in_length_bounds, check_quality, write_filtered_fastq, read_fastq_file
+from gene_code_utils.amino_analyzer_utils import  is_aa, aa_weight, count_hydroaffinity, peptide_cutter, one_to_three_letter_code, sulphur_containing_aa_counter
 from gene_code_utils.dna_rna_tools_utils import type_rna_or_dna, transcribe, reverse_transcription, has_start_codon, reverse, complement, reverse_complement, is_palindrome
 
 
-
-def filter_dna(seqs: Dict[str, Tuple[str, str]], gc_bounds: Union[Tuple[int, int], int] = (0, 100),
+def filter_dna(input_path: str, output_filename: str = '', gc_bounds: Union[Tuple[int, int], int] = (0, 100),
               length_bounds: Union[Tuple[int, int], int] = (0, 2**32), quality_threshold: int = 0) -> Dict[str, Tuple[str, str]]:
     """
     Filter and process a dictionary of FASTQ sequences based on specified criteria.
 
     Args:
-        seqs (dict): A dictionary containing FASTQ sequences.
-            Key: Sequence name (string).
-            Value: Tuple of two strings (sequence, quality).
+        input_path (str): Path to the input FASTQ file. Please write your path with directory etc. You can use os.path.join(dir_name, file_name) 
+        output_filename (str): Name of the output FASTQ file (without the file extension). By default, it is the same as the input name.
         gc_bounds (tuple or int): GC content filtering bounds.
             If a tuple, it represents the lower and upper bounds (inclusive) for GC content as percentages.
             If an int, it represents the upper bound for GC content as a percentage.
@@ -28,30 +26,30 @@ def filter_dna(seqs: Dict[str, Tuple[str, str]], gc_bounds: Union[Tuple[int, int
     Returns:
         filtered_seqs (dict): A dictionary containing filtered FASTQ sequences.
             Key: Sequence name (string).
-            Value: Tuple of two strings (sequence, quality).
+            Value: Tuple of two strings (sequence, comment, quality).
 
     Example:
         filtered_seqs = filtr_dna(seqs, gc_bounds=(20, 80), length_bounds=50, quality_threshold=30)
         - here gc_bounds interval will be [20, 80] and length_bounds will be [0, 50].
           quality_threshold will be 30 <= sequence score
 
-    Warnings: If you prefer
     """
-
+    seqs = read_fastq_file(input_path)
     filtered_seqs = dict()
-    for fastq_name, (seq, quality) in seqs.items():
+    for fastq_name, (seq, seq_comment, quality) in seqs.items():
         if is_dna(seq):
             if type(gc_bounds) == int:
                 gc_bounds = (0, gc_bounds)
             if type(length_bounds) == int:
                 length_bounds = (0, length_bounds)
             if is_in_gc_bounds(gc_bounds, seq) and is_in_length_bounds(length_bounds, seq) and check_quality(quality_threshold, quality):
-                filtered_seqs[fastq_name] = (seq, quality)
+                filtered_seqs[fastq_name] = (seq,seq_comment, quality)
+    
+    if output_filename == '':
+        output_filename = input_path
+    write_filtered_fastq(filtered_seqs, output_filename)
 
     return filtered_seqs
-
-
-from amino_analyzer_utils import aa_weight, count_hydroaffinity, peptide_cutter, one_to_three_letter_code, sulphur_containing_aa_counter
 
 
 def run_amino_analyzer(sequence: str, procedure: str, *, weight_type: str = 'average', enzyme: str = 'trypsin'):
