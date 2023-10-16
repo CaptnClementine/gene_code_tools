@@ -7,7 +7,7 @@
 In the main file **gene_code_main_operations** you can find 3 most important functions**:**
 
 - [ ]  filter_dna
-    - Filter a dictionary of FASTQ sequences based on various criteria.
+    - Filter a file with dictionaries of FASTQ sequences based on various criteria.
 - [ ]  run_amino_analyzer
     - Perform basic protein analytics.
 - [ ]  run_dna_rna_tools
@@ -15,7 +15,7 @@ In the main file **gene_code_main_operations** you can find 3 most important fun
 
 | Function | Description | Returns | Arguments |
 | --- | --- | --- | --- |
-| filter_dna | Filter FASTQ sequences based on criteria like GC content, length, and quality. | Filtered sequences (dict) | seqs (dict), gc_bounds (tuple or int), length_bounds (tuple or int, optional), quality_threshold (int, optional) |
+| filter_dna | Filter FASTQ sequences based on criteria like GC content, length, and quality. | Filtered sequences (file) | input_path (str), output_path (str), gc_bounds (tuple or int), length_bounds (tuple or int, optional), quality_threshold (int, optional) |
 | run_amino_analyzer | Perform various protein sequence operations. | Result of specified operation(s) | seq (str), args (Union[str, Tuple[str, ...]]) |
 | run_dna_rna_tools | Perform DNA and RNA sequence operations. | Result of specified operation(s) | seq (str), args (Union[str, Tuple[str, ...]]) |
 
@@ -38,12 +38,13 @@ Here's more detailed information and examples for each function:
 Here's an example of how to use the functions provided by `gene_code_tools`:
 
 ```python
-# Create a dictionary of FASTQ sequences
-seqs = {
-    'sequence1': ('AGCTAGCTAGCT', '!@#$!@#$!@#$'),
-    'sequence2': ('TATATATATATA', 'abcdefghi'),
+# Create a input_file of FASTQ sequences like this: 
+@SRX079804:1:SRR292678:1:1101:21885:21885 1:N:0:1 BH:ok
+ACAGCAACATAAACATGATGGGATGGCGTAAGCCCCCGAGATATCAGTTTACCCAGGATAAGAGATTAAATTATGAGCAACATTATTAA
++SRX079804:1:SRR292678:1:1101:21885:21885 1:N:0:1 BH:ok
+FGGGFGGGFGGGFGDFGCEBB@CCDFDDFFFFBFFGFGEFDFFFF;D@DD>C@DDGGGDFGDGG?GFGFEGFGGEF@FDGGGFGFBGGD
     # Add more sequences as needed
-}
+
 
 # Specify your filtering criteria
 gc_bounds = (0, 80)  # GC content bounds
@@ -51,7 +52,7 @@ length_bounds = 100  # Sequence length bounds
 quality_threshold = 30  # Quality threshold
 
 # Filter the sequences based on the criteria
-filtered_seqs = filter_dna(seqs, gc_bounds, length_bounds, quality_threshold)
+filtered_seqs = filter_dna(input_file_name, output_file_name, gc_bounds, length_bounds, quality_threshold)
 
 # Use the filtered sequences as needed
 print(filtered_seqs)
@@ -69,7 +70,9 @@ When using Gene Code Tools, you might encounter common errors such as invalid in
 
 Gene Code Tools provides the following specified variables and parameters:
 
-- `seqs` (dict): A dictionary containing FASTQ sequences.
+- input_path (str): Path to the input FASTQ file. Please write your path with directory etc. You can use os.path.join(dir_name, file_name)
+- output_filename (str): Name of the output FASTQ file (without the file extension). By default, it is the same as the input name.
+       
 - `gc_bounds` (tuple or int): GC content filtering bounds.
 - `length_bounds` (tuple or int, optional): Length filtering bounds.
 - `quality_threshold` (int, optional): Quality threshold for filtering sequences.
@@ -80,16 +83,16 @@ Here are some examples of how to use Gene Code Tools:
 
 ```python
 # Example 1: Filtering DNA sequences
-filtered_seqs = filter_dna(seqs, gc_bounds=(20, 80), length_bounds=50, quality_threshold=30)
+filtered_seqs = filter_dna(seqs_file, gc_bounds=(20, 80), length_bounds=50, quality_threshold=30)
 
 # Example 2: Using a single upper bound for GC content
-filtered_seqs = filter_dna(seqs, gc_bounds=44.4, length_bounds=(10, 100))
+filtered_seqs = filter_dna(seqs_file, gc_bounds=44.4, length_bounds=(10, 100))
 
 # Example 3: Using a single upper bound for sequence length
-filtered_seqs = filter_dna(seqs, gc_bounds=(20, 80), length_bounds=1000)
+filtered_seqs = filter_dna(seqs_file, gc_bounds=(20, 80), length_bounds=1000)
 
 # Example 4: Filtering without specifying bounds
-filtered_seqs = filter_dna(seqs)
+filtered_seqs = filter_dna(seqs_file)
 ```
 
 ## ⭐ function run_amino_analyzer
