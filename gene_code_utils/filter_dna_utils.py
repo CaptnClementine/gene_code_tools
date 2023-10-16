@@ -44,6 +44,19 @@ def read_fastq_file(input_path: str) -> Dict[str, Tuple[str, str, str]]:
     return fastq_dict
 
 
+def write_filtered_fastq(filtered_seqs: Dict[str, Tuple[str, str, str]], output_filename: str):
+    """
+    Write a FASTQ file
+
+    Args:
+        filtered_seqs (dict): dict of FASTQ to write them in output
+        output_filename (str): Path to the output FASTQ file. By default, it is the same as the input name.
+    """
+    with open(f'{output_filename}', 'w') as file:
+        for name, (seq, comment, quality) in filtered_seqs.items():
+            file.write(f'@{name}_{seq}_{comment}_{quality}\n')
+
+
 def is_dna(seq: str) -> bool:
     """
     Check if the input sequence consists only of DNA characters.
