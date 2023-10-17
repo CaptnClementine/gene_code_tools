@@ -1,7 +1,7 @@
 from typing import List, Union
 
-DNA = set ('ATGCatgc')
-RNA = set ('AUGCaugc')
+DNA = set("ATGCatgc")
+RNA = set("AUGCaugc")
 TRANSCRIPTION_TABLE = {
     "a": "a", "A": "A",
     "t": "u", "T": "U",
@@ -53,21 +53,21 @@ def type_rna_or_dna(seqs: List[str]) -> str:
     counter_dna = 0
     counter_rna = 0
     ambigiuos = 0
-    for i in seqs:
-      if is_dna(i) and is_rna(i):
-          ambigiuos = ambigiuos+1
+    for nucl in seqs:
+        if is_dna(nucl) and is_rna(nucl):
+            ambigiuos = ambigiuos + 1
       else:
-        if is_dna(i):
-            counter_dna=counter_dna+1
-        elif is_rna(i):
-            counter_rna=counter_rna+1
-    if (counter_dna + ambigiuos) == len(seqs):
-        print('You have ', ambigiuos, ' ambigious NA. I suppose they are DNA')
+          if is_dna(nucl):
+              counter_dna=counter_dna + 1
+          elif is_rna(nucl):
+              counter_rna=counter_rna + 1
+    if counter_dna + ambigiuos == len(seqs):
+        print(f'You have {ambigiuos} ambigious NA. I suppose they are DNA')
         return "DNA"
-    elif (counter_rna + ambigiuos) == len(seqs):
-        print('You have ', ambigiuos, ' ambigious NA. I suppose they are RNA')
+    elif counter_rna + ambigiuos == len(seqs):
+        print(f'You have {ambigiuos} ambigious NA. I suppose they are RNA')
         return "RNA"
-    elif (counter_dna + counter_rna + ambigiuos)  == len(seqs):
+    elif counter_dna + counter_rna + ambigiuos  == len(seqs):
         return "MIXED"
     else:
         raise ValueError("I can work only with RNA and DNA. \n Check your sequences and try one more time!")   
@@ -103,8 +103,8 @@ def complement(seq: str) -> str:
         complement_dict = {'A': 'U', 'a': 'u', 'C': 'G', 'c': 'g', 'G': 'C', 'g': 'c', 'U': 'A', 'u': 'a'}
     else:
         raise ValueError("Input sequence must be DNA or RNA.")
-    for i in seq:
-        new_seq.append(complement_dict.get(i))
+    for nucl in seq:
+        new_seq.append(complement_dict.get(nucl))
     return ''.join(new_seq)
 
 
@@ -133,11 +133,11 @@ def reverse_transcription(seq: str) -> str:
     """
     c_dna = []
     u_to_t = {'U': 'T', 'u': 't'}
-    for i in seq:
-        if i in u_to_t:
-            c_dna.append(u_to_t.get(i))
+    for nucl in seq:
+        if nucl in u_to_t:
+            c_dna.append(u_to_t.get(nucl))
         else:
-            c_dna.append(i)
+            c_dna.append(nucl)
     return ''.join(c_dna)
 
 
