@@ -38,7 +38,7 @@ def filter_dna(input_path: str, output_filename: str = '', gc_bounds: Union[Tupl
     filtered_seqs = dict()
     for fastq_name, (seq, seq_comment, quality) in seqs.items():
         if is_dna(seq):
-            if type(gc_bounds) == int:
+            if (type(gc_bounds) == int) or (type(gc_bounds) == float):
                 gc_bounds = (0, gc_bounds)
             if type(length_bounds) == int:
                 length_bounds = (0, length_bounds)
