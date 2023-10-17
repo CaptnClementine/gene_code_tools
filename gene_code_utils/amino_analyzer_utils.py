@@ -1,5 +1,5 @@
-AA_SET = set(['V', 'I', 'L', 'E', 'Q', 'D', 'N', 'H', 'W', 'F', 'Y', 'R', 'K', 'S', 'T', 'M', 'A', 'G', 'P', 'C',
-               'v', 'i', 'l', 'e', 'q', 'd', 'n', 'h', 'w', 'f', 'y', 'r', 'k', 's', 't', 'm', 'a', 'g', 'p', 'c'])
+AA_SET = {'V', 'I', 'L', 'E', 'Q', 'D', 'N', 'H', 'W', 'F', 'Y', 'R', 'K', 'S', 'T', 'M', 'A', 'G', 'P', 'C',
+               'v', 'i', 'l', 'e', 'q', 'd', 'n', 'h', 'w', 'f', 'y', 'r', 'k', 's', 't', 'm', 'a', 'g', 'p', 'c'}
 HYDROPHOBIC_AA = ['A', 'V', 'L', 'I', 'P', 'F', 'W', 'M']
 HYDROPHILIC_AA = ['R', 'N', 'D', 'C', 'Q', 'E', 'G', 'H', 'K', 'S', 'T', 'Y']
 AMINO_ACIDS = {'A': 'Ala', 'C': 'Cys', 'D': 'Asp', 'E': 'Glu', 'F': 'Phe', 'G': 'Gly', 'H': 'His', 'I': 'Ile', 'K': 'Lys', 'L': 'Leu',
@@ -107,7 +107,7 @@ def peptide_cutter(sequence: str, enzyme: str = "trypsin") -> list:
         return "You have chosen an enzyme that is not provided. Please choose between trypsin and chymotrypsin."
     
     if enzyme == "trypsin":  # Trypsin cuts peptide chains mainly at the carboxyl side of the amino acids lysine or arginine.
-        for aa in range(len(sequence)-1):
+        for aa in range(len(sequence) - 1):
             if sequence[aa] in ['K', 'R', 'k', 'r'] and sequence[aa+1] not in ['P','p']:
                 cleavage_sites.append(aa + 1)
     
