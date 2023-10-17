@@ -84,8 +84,7 @@ def count_gc_content(dna: str) -> float:
     """
     dna = dna.upper()
     gc = dna.count('G') + dna.count('C')
-    at = dna.count('A') + dna.count('T')
-    gc_content = gc / (at + gc) * 100
+    gc_content = gc / len(dna) * 100
     return gc_content
 
 
