@@ -1,0 +1,110 @@
+LOCUS       NODE_1_length_2558431_cov_75.1851642558431 bp   DNA linear
+BCT28-ноя-2022
+DEFINITION  Escherichia coli strain strain.
+ACCESSION   
+VERSION
+KEYWORDS    .
+SOURCE      Escherichia coli
+  ORGANISM  Escherichia coli
+            Bacteria; Proteobacteria; gamma subdivision; Enterobacteriaceae;
+            Escherichia.
+COMMENT     Annotated using prokka 1.14.6 from
+            https://github.com/tseemann/prokka.
+FEATURES             Location/Qualifiers
+     source          1..2558431
+                     /organism="Escherichia coli"
+                     /mol_type="genomic DNA"
+                     /strain="strain"
+                     /db_xref="taxon:562"
+     CDS             384..893
+                     /locus_tag="IFLAKNEJ_00001"
+                     /inference="ab initio prediction:Prodigal:002006"
+                     /codon_start=1
+                     /transl_table=11
+                     /product="hypothetical protein"
+                     /translation="MNQQRFDDSTLIRIFALHELHRLKEHGLTRGALLDYHSRYKLVF
+                     LAHSQPEYRKLGPFVADIHQWQNLDDFYNQYYQRVIVLLSHPANPRDHTNVLMHVQGY
+                     FRPHIDSTERQQLAALIDSYRRGEQPLLAPLMRIKHYMALYPDAWLSGQRYFELWPRV
+                     INLRHSGVL"
+     CDS             890..2308
+                     /gene="phrB"
+                     /locus_tag="IFLAKNEJ_00002"
+                     /EC_number="4.1.99.3"
+                     /inference="ab initio prediction:Prodigal:002006"
+                     /inference="similar to AA sequence:UniProtKB:P00914"
+                     /codon_start=1
+                     /transl_table=11
+                     /product="Deoxyribodipyrimidine photo-lyase"
+                     /db_xref="COG:COG0415"
+                     /translation="MITHLVWFRQDLRLHDNLALAAACRNSSARVLALYIATPRQWAT
+                     HNMSPRQAELINAQLNGLQIALAEKGIPLLFREVDDFVASVEIVKQVCAENSVTHLFY
+                     NYQYEVNERARDVEVERALRNVVCEGFDDSVILPPGAVMTGNHEMYKVFTPFKNAWLK
+                     RLREGMPECVAAPKVRSSGSIEPAPSITLNYPRQSFDTAHFPVEEKAAIAQLRQFCQN
+                     GAGEYEQQRDFPAVEGTSRLSASLATGGLSPRQCLHRLLAEQPQALDGGAGSVWLSEL
+                     IWREFYRHLMTYYPSLCKHCPFIAWTDRVQWQSNPAHLQAWQKGKTGYPIVDAAMRQL
+                     NSTGWMHNRLRMITASFLVKDLLIDWREGERYFMSQLIDGDLAANNGGWQWAASTGTD
+                     AAPYFRIFNPITQGEKFDREGEFIRRWLPELRDVPGKAVHEPWKWAQKAGVKLDYPQP
+                     IVDHKEARLRTLAAYEEARKGA"
+     CDS             complement(2350..3831)
+                     /gene="dtpD"
+                     /locus_tag="IFLAKNEJ_00003"
+                     /inference="ab initio prediction:Prodigal:002006"
+                     /inference="similar to AA sequence:UniProtKB:P75742"
+                     /codon_start=1
+                     /transl_table=11
+                     /product="Dipeptide permease D"
+                     /db_xref="COG:COG3104"
+                     /translation="MNKHASQPRAIYYVVALQIWEYFSFYGMRALLILYLTNQLKYND
+                     THAYELFSAYCSLVYVTPILGGFLADKVLGNRMAVMLGALLMAIGHVVLGASEIHPSF
+                     LYLSLAIIVCGYGLFKSNVSCLLGELYEPTDPRRDGGFSLMYAAGNVGSIIAPIACGY
+                     AQEEYSWAMGFGLAAVGMIAGLVIFLCGNRHFTHTRGVNKKVLRATNFLLPNWGWLLV
+                     LLVATPALITVLFWKEWSVYALIVATIIGLGVLAKIYRKAENQKQRKELGLIVTLTFF
+                     SMLFWAFAQQGGSSISLYIDRFVNRDMFGYTVPTAMFQSINAFAVMLCGVFLAWVVKE
+                     SVAGNRTVRIWGKFALGLGLMSAGFCILTLSARWSAMYGHSSLPLMVLGLAVMGFAEL
+                     FIDPVAMSQITRIEIPGVTGVLTGIYMLLSGAIANYLAGVIADQTSQASFDASGAINY
+                     SINAYIEVFDQITWGALACVGLVLMIWLYQALKFRNRALALES"
+     CDS             4102..4845
+                     /gene="ybgI"
+                     /locus_tag="IFLAKNEJ_00004"
+                     /inference="ab initio prediction:Prodigal:002006"
+                     /inference="similar to AA sequence:UniProtKB:P0AFP6"
+                     /codon_start=1
+                     /transl_table=11
+                     /product="GTP cyclohydrolase 1 type 2"
+                     /db_xref="COG:COG0327"
+                     /translation="MKNTELEQLINEKLNSAAISDYAPNGLQVEGKETVQKIVTGVTA
+                     SQALLDEAVRLGADAVIVHHGYFWKGESPVIRGMKRNRLKTLLANDINLYGWHLPLDA
+                     HPELGNNAQLAALLGITVMGEIEPLVPWGELTMPVPGLELASWIEARLGRKPLWCGDT
+                     GPEVVQRVAWCTGGGQSFIDSAARFGVDAFITGEVSEQTIHSAREQGLHFYAAGHHAT
+                     ERGGIRALSEWLNENTDLDVTFIDIPNPA"
+     CDS             4868..5524
+                     /gene="pxpB"
+                     /locus_tag="IFLAKNEJ_00005"
+                     /EC_number="3.5.2.9"
+                     /inference="ab initio prediction:Prodigal:002006"
+                     /inference="similar to AA sequence:UniProtKB:P0AAV4"
+                     /codon_start=1
+                     /transl_table=11
+                     /product="5-oxoprolinase subunit B"
+                     /db_xref="COG:COG2049"
+                     /translation="MQRARCYLIGETAVVLELEPPVTLASQKRIWRLAQRLVDMPNVV
+                     EAIPGMNNITVILRNPESLALDAIERLQRWWEESEALEPESRFIEIPVVYGGAGGPDL
+                     AVVAAHCGLSEKQVVELHSSVEYVVWFLGFQPGFPYLGSLPEQLHTPRRAEPRLLVPA
+                     GSVGIGGPQTGVYPLATPGGWQLIGHTSLSLFDPARDEPILLRPGDSVRFVPQKEGVC
+                     "
+     CDS             5518..6450
+                     /gene="pxpC"
+                     /locus_tag="IFLAKNEJ_00006"
+                     /EC_number="3.5.2.9"
+                     /inference="ab initio prediction:Prodigal:002006"
+                     /inference="similar to AA sequence:UniProtKB:P75745"
+                     /codon_start=1
+                     /transl_table=11
+                     /product="5-oxoprolinase subunit C"
+                     /db_xref="COG:COG1984"
+                     /translation="MLKIIRAGMYTTVQDGGRHGFRQSGISHCGALDMPALRIANLLV
+                     GNDANAPALEITLGQLTVEFETDGWFALTGAGCEARLDDNAVWTGWRLPMKAGQRLTL
+                     KRPQHGMRSYLAVAGGIDVPPVMGSCSTDLNVGIGGLEGRLLKDGDRLPIGKSKRDFM
+                     EAQGVKQLLWGNRIRALPGPEYHEFDRASQDAFWRSPWQLSPQSNRMGYRLQGQILKR
+                     TTDRELLSHGLLPGVVQVPHNGQPIVLMNDAQTTGGYPRIACIIEADMYHLAQIPLGQ
+                     PIHFVQCSLEEALKARQDQQRYFEQLAWRLHNEN"
