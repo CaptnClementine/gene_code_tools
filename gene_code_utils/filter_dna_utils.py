@@ -54,7 +54,7 @@ def write_filtered_fastq(filtered_seqs: Dict[str, Tuple[str, str, str]], output_
     """
     with open(f'{output_filename}', 'w') as file:
         for name, (seq, comment, quality) in filtered_seqs.items():
-            file.write(f'@{name}_{seq}_{comment}_{quality}\n')
+            file.write(f'@{name}\n{seq}\n{comment}\n{quality}\n')
 
 
 def is_dna(seq: str) -> bool:
