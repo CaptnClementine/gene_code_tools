@@ -1,5 +1,6 @@
 import os
-from typing import Tuple, Union
+from typing import Tuple, Union, Type
+from abc import ABC, abstractmethod
 
 import numpy as np
 from Bio import SeqIO
@@ -16,6 +17,148 @@ class InvalidInput(ValueError):
         message (str): Explanation of the error.
     """
     pass
+
+
+class BiologicalSequence(ABC, str):
+
+    @abstractmethod
+    def __str__(self):
+        pass
+
+    @abstractmethod
+    def check_alphabet(self):
+        pass
+
+
+class NucleicAcidSequence(BiologicalSequence):
+    def __init__(self, sequence: str, alphabet: dict, complement_alphabet: dict = None):
+        self.sequence = None
+        self.alphabet = None
+        self.complement_alphabet = None
+
+    
+    def setter(self, sequence: str, alphabet: dict, complement_alphabet: dict = None):
+        self.sequence = sequence
+        self.alphabet = alphabet
+        self.complement_alphabet = complement_alphabet
+
+    
+    def __str__(self):
+        return (str(self.sequence))
+
+    
+    def check_alphabet(self) -> Type:
+        """
+        Check if a sequence is DNA or RNA.
+
+        Returns:
+            bool: True if the sequence is DNA or RNA, False otherwise.
+        """
+
+        unique_chars = set(self.sequence)
+        if not (unique_chars <= self.alphabet):
+            raise InvalidInput()
+        return type(self)  # ???
+
+    
+    def complement(self) -> str:
+        """
+        Find the complement of a DNA or RNA sequence.
+
+        Returns:
+            str: The complemented sequence.
+        """
+
+        new_seq = []
+        for nucl in self.sequence:
+            new_seq.append(self.complement_alphabet.get(nucl))
+        return type(self)(''.join(new_seq))
+
+    
+    def gc_content(self):
+        return SeqUtils.gc_fraction(self.sequence)
+
+
+class DNASequence(NucleicAcidSequence):
+    _alphabet = {'A', 'T', 'G', 'C', 'a', 't', 'g', 'c'}
+    _complement_alphabet = {'A': 'T', 'a': 't', 'C': 'G', 'c': 'g', 'G': 'C', 'g': 'c', 'T': 'A', 't': 'a'}
+    transcribe_alphabet = {
+        "a": "a", "A": "A",
+        "t": "u", "T": "U",
+        "u": "t", "U": "T",
+        "g": "g", "G": "G",
+        "c": "c", "C": "C"
+    }
+
+    def __init__(self, sequence: str, alphabet: dict = _alphabet,
+                 complement_alphabet: dict = _complement_alphabet):
+        super().setter(sequence, alphabet, complement_alphabet)
+
+    def transcribe(self):
+        return RNASequence(''.join([self.transcribe_alphabet[i] for i in self.sequence]))
+
+
+class RNASequence(NucleicAcidSequence):
+    _alphabet = {'A', 'U', 'G', 'C', 'a', 'u', 'g', 'c'}
+    _complement_alphabet = {'A': 'U', 'a': 'u', 'C': 'G', 'c': 'g', 'G': 'C', 'g': 'c', 'U': 'A', 'u': 'a'}
+
+    def __init__(self, sequence: str, alphabet: dict = _alphabet,
+                 complement_alphabet: dict = _complement_alphabet):
+        super().setter(sequence, alphabet, complement_alphabet)
+
+
+class AminoAcidSequence(BiologicalSequence):
+    alphabet = {'V', 'I', 'L', 'E', 'Q', 'D', 'N', 'H', 'W', 'F', 'Y', 'R', 'K', 'S', 'T', 'M', 'A', 'G', 'P',
+                'C', 'v', 'i', 'l', 'e', 'q', 'd', 'n', 'h', 'w', 'f', 'y', 'r', 'k', 's', 't', 'm', 'a', 'g', 'p', 'c'}
+    average_weights = {
+        'A': 71.0788, 'R': 156.1875, 'N': 114.1038, 'D': 115.0886, 'C': 103.1388,
+        'E': 129.1155, 'Q': 128.1307, 'G': 57.0519, 'H': 137.1411, 'I': 113.1594,
+        'L': 113.1594, 'K': 128.1741, 'M': 131.1926, 'F': 147.1766, 'P': 97.1167,
+        'S': 87.0782, 'T': 101.1051, 'W': 186.2132, 'Y': 163.1760, 'V': 99.1326
+    }
+    three_letter_alphabet = {'A': 'Ala', 'C': 'Cys', 'D': 'Asp', 'E': 'Glu', 'F': 'Phe', 'G': 'Gly', 'H': 'His',
+                             'I': 'Ile', 'K': 'Lys', 'L': 'Leu',
+                             'M': 'Met', 'N': 'Asn', 'P': 'Pro', 'Q': 'Gln', 'R': 'Arg', 'S': 'Ser', 'T': 'Thr',
+                             'V': 'Val', 'W': 'Trp', 'Y': 'Tyr'}
+
+    def __init__(self, sequence: str):
+        self.sequence = sequence
+
+    def __str__(self):
+        return (str(self.sequence))
+
+    
+    def aa_average_weight(self, weight: str = 'average') -> float:
+        """
+        Calculate the amino acids weight in a protein sequence.
+
+        Args:
+            seq (str): The amino acid sequence to calculate the weight for.
+            weight (str, optional): The type of weight to use, either 'average' or 'monoisotopic'. Default is 'average'.
+
+        Returns:
+            float: The calculated weight of the amino acid sequence.
+        """
+
+        final_weight = 0
+        for aa in self.sequence.upper():
+            final_weight += self.average_weights[aa]
+        return round(final_weight, 3)
+
+    
+    def one_to_three_letter_code(self) -> str:
+        """
+        This function converts a protein sequence from one-letter amino acid code to three-letter code.
+
+        Args:
+            sequence (str): The input protein sequence in one-letter code.
+
+        Returns:
+            str: The converted protein sequence in three-letter code.
+        """
+
+        three_letter_code = [self.three_letter_alphabet.get(aa.upper()) for aa in self.sequence]
+        return '-'.join(three_letter_code)
 
 
 def filter_dna(input_path: str, output_filename: str = '', gc_bounds: Union[Tuple[int, int], int] = (0, 100),
@@ -70,7 +213,6 @@ def filter_dna(input_path: str, output_filename: str = '', gc_bounds: Union[Tupl
         os.mkdir('fastq_filtrator_results')
     output_filename = os.path.join('fastq_filtrator_results', output_filename)
     SeqIO.write(good_reads, handle=output_filename, format="fastq")
-
     return None
 
 
