@@ -19,6 +19,18 @@ class InvalidInput(ValueError):
     pass
 
 
+class NotImplementedError(ValueError):
+    """
+    Exception raised for call invalid class sample.
+
+    Inherits from ValueError.
+
+    Attributes:
+        message (str): Explanation of the error.
+    """
+    pass
+
+
 class BiologicalSequence(ABC, str):
 
     @abstractmethod
@@ -31,22 +43,20 @@ class BiologicalSequence(ABC, str):
 
 
 class NucleicAcidSequence(BiologicalSequence):
-    def __init__(self, sequence: str, alphabet: dict, complement_alphabet: dict = None):
+    def __init__(self, sequence: str, alphabet: dict = None, complement_alphabet: dict = None):
         self.sequence = None
         self.alphabet = None
         self.complement_alphabet = None
 
-    
+
     def setter(self, sequence: str, alphabet: dict, complement_alphabet: dict = None):
         self.sequence = sequence
         self.alphabet = alphabet
         self.complement_alphabet = complement_alphabet
 
-    
     def __str__(self):
         return (str(self.sequence))
 
-    
     def check_alphabet(self) -> Type:
         """
         Check if a sequence is DNA or RNA.
@@ -60,7 +70,6 @@ class NucleicAcidSequence(BiologicalSequence):
             raise InvalidInput()
         return type(self)  # ???
 
-    
     def complement(self) -> str:
         """
         Find the complement of a DNA or RNA sequence.
@@ -68,13 +77,13 @@ class NucleicAcidSequence(BiologicalSequence):
         Returns:
             str: The complemented sequence.
         """
-
+        if self.alphabet == None:
+            raise NotImplementedError()
         new_seq = []
         for nucl in self.sequence:
             new_seq.append(self.complement_alphabet.get(nucl))
         return type(self)(''.join(new_seq))
 
-    
     def gc_content(self):
         return SeqUtils.gc_fraction(self.sequence)
 
@@ -127,7 +136,6 @@ class AminoAcidSequence(BiologicalSequence):
     def __str__(self):
         return (str(self.sequence))
 
-    
     def aa_average_weight(self, weight: str = 'average') -> float:
         """
         Calculate the amino acids weight in a protein sequence.
@@ -145,7 +153,6 @@ class AminoAcidSequence(BiologicalSequence):
             final_weight += self.average_weights[aa]
         return round(final_weight, 3)
 
-    
     def one_to_three_letter_code(self) -> str:
         """
         This function converts a protein sequence from one-letter amino acid code to three-letter code.
@@ -213,8 +220,8 @@ def filter_dna(input_path: str, output_filename: str = '', gc_bounds: Union[Tupl
         os.mkdir('fastq_filtrator_results')
     output_filename = os.path.join('fastq_filtrator_results', output_filename)
     SeqIO.write(good_reads, handle=output_filename, format="fastq")
-    return None
 
+    return None
 
 def is_in_gc_bounds(bounds: tuple, gc_content: float) -> bool:
     """
