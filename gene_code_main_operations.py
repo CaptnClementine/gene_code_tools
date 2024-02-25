@@ -18,7 +18,6 @@ class InvalidInput(ValueError):
     """
     pass
 
-
 class NotImplementedError(ValueError):
     """
     Exception raised for call invalid class sample.
@@ -57,7 +56,7 @@ class NucleicAcidSequence(BiologicalSequence):
     def __str__(self):
         return (str(self.sequence))
 
-    def check_alphabet(self) -> Type:
+    def check_alphabet(self) -> bool:
         """
         Check if a sequence is DNA or RNA.
 
@@ -67,8 +66,8 @@ class NucleicAcidSequence(BiologicalSequence):
 
         unique_chars = set(self.sequence)
         if not (unique_chars <= self.alphabet):
-            raise InvalidInput()
-        return type(self)  # ???
+            return False
+        return True  
 
     def complement(self) -> str:
         """
@@ -135,7 +134,22 @@ class AminoAcidSequence(BiologicalSequence):
 
     def __str__(self):
         return (str(self.sequence))
+    
+    
+    def check_alphabet(self) -> bool:
+        """
+        Check if a sequence is DNA or RNA.
 
+        Returns:
+            bool: True if the sequence is DNA or RNA, False otherwise.
+        """
+
+        unique_chars = set(self.sequence)
+        if not (unique_chars <= self.alphabet):
+            return False
+        return True  
+    
+    
     def aa_average_weight(self, weight: str = 'average') -> float:
         """
         Calculate the amino acids weight in a protein sequence.
@@ -152,6 +166,7 @@ class AminoAcidSequence(BiologicalSequence):
         for aa in self.sequence.upper():
             final_weight += self.average_weights[aa]
         return round(final_weight, 3)
+
 
     def one_to_three_letter_code(self) -> str:
         """
